@@ -1,33 +1,41 @@
 const ytdl = require('ytdl-core')
 
-let volume = 1
-const StreamOptions = {seek: 0, volume,}
+let pronto = false
 
 let music = []
-let VoiceChannel = msg.guild.channels.find( 
-    channel => 
-    channell.id === '737824739480961098'
-    )
-const stream = ytdl(urlStream, {filter: 'audioonly'})
-const DJ = connection.playStream(stream, StreamOptions)
 
 module.exports = {
-    add(msg) {
-        if(VoiceChannel === null) {
-            msg.delete()
-            msg.channel.send('Canal de audiu não foi encontrado')
+    join(msg){
+        if(msg.member.voice.channel){
+            msg.member.voice.channel.join()
+            pronto = true
+        }else{
+            msg.channel.send('Entre em um canal de voz')
         }
-        VoiceChannel.join()
-        .then(connection => {
-            DJ()
-        })
+
+        msg.delete()
+    },
+    add(msg) {
+        if(pronto){
+            var url = msg.content.replace('!play ','')
+            if(ytdl.validateURL(url)){
+                msg.member.voice.channel.connection.play(ytdl(url, { quality: 'highestaudio' }));
+            }else{
+                msg.channel.send('Link invalido')
+            }
+        }else{
+            this.join(msg)
+        }
+        
     },
     leave(msg) {
-        VoiceChannel.join()
-        .then(connection => {
-            DJ.on('end', end => {
-                VoiceChannel.leave()
-            })
-        })
-    }
+        if(msg.member.voice.channel){
+            msg.member.voice.channel.leave()
+            pronto = false
+        }else{
+            msg.channel.send('Entre em um canal de voz')
+        }
+
+        msg.delete()
+        }
 }

@@ -1,8 +1,10 @@
 {
   "main": "src/index.js",
   "dependencies": {
-    "discord.js": "^12.2.0",
-    "opusscript": "^0.0.7"
+    "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^8.2.0",
+    "opusscript": "^0.0.7",
+    "ytdl-core": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

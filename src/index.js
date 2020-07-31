@@ -1,3 +1,4 @@
+require('dotenv/config')
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -18,11 +19,11 @@ client.on('message', async msg => {
     msg.delete()
     msg.channel.send("```:game_die: [numero-1] [numero-2] até 10 numeros ```")
   }
-  if(msg.content === '<:RPG:738811431461584989> clear'){
+  if(msg.content === '<:rpg:738811431461584989> clear'){
     const featched = await msg.channel.messages.fetch({ limit: 100 })
     msg.channel.bulkDelete(featched)
   }
     Music(msg, client)
 });
 
-client.login('NzM4NTA1ODk4NDg5NTQ0NzE2.XyM5Ng.YtuCi_7aUvo_qKgJcV5di3GBsGk');
+client.login(process.env.token);
