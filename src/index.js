@@ -6,8 +6,21 @@ const dado = require('./commands/dado')
 const Music = require('./commands/Music')
 
 client.on('ready', () => {
+    let status = [
+        'Vida de RPG',
+        'Vida de bot',
+        'Vida em servidor',
+        {name: `${client.users.cache.size} Pessoas sendo ouvidas`, type: 'LISTENING'}
+    ]
+
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity('Vida de RPG')
+
+  function setStatus(){
+        let ran = status[Math.floor(Math.random()*status.length)]
+        client.user.setActivity(ran)
+    }
+    setStatus()
+    setInterval(() => setStatus(),5000)
 });
 
 client.on('message', async msg => {
